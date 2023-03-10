@@ -13,6 +13,16 @@ resp = requests.get(url,headers=headers)
 soup = bs(resp.text, "lxml")
 #cat=soup.class('category')
 
-news= soup.find_all(class_= "item__title")
+news= soup.find_all(class_= "item__wrap")
+
 for n in news:
-    print(n.text)
+    data=n.find(class_='item__category').text.strip()
+    name = n.find(class_='item__title').text.strip()
+    print(data,name)
+
+
+
+
+
+
+
