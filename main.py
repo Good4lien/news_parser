@@ -1,6 +1,18 @@
 import requests, lxml
 from bs4 import BeautifulSoup as bs
 from datetime import date, datetime
+import sqlite3
+
+def bd(a):
+    conn = sqlite3.connect('news.sqlite')
+    cur = conn.cursor()
+    i=0
+    for n in a:
+        cur.execute("INSERT INTO news VALUES(?, ?, ?);", [i,n])
+        conn.commit()
+        i+=1
+
+    conn.close()
 
 def dt(date_):
     dt=''
@@ -28,12 +40,16 @@ def main():
 
     news= soup.find_all(class_= "item__wrap")
 
-    for n in news:
-        date_ = dt(n.find(class_='item__category').text.strip())
-        name = n.find(class_='item__title').text.strip()
-        print(date_,name)
+    print('--[date]---[time]-----------------------[news headline]--------------------------')
 
-    #print(str(datetime.now()).split('.')[0])
+    a=[]
+    for n in news:
+        date = dt(n.find(class_='item__category').text.strip())
+        name = n.find(class_='item__title').text.strip()
+        print(date,name)
+        a.append([date,name])
+
+    bd(a)
 
 if __name__ == "__main__":
     main()
