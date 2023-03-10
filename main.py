@@ -40,13 +40,10 @@ def main():
 
     news= soup.find_all(class_= "item__wrap")
 
-    print('--[date]---[time]-----------------------[news headline]--------------------------')
-
     a=[]
     for n in news:
         date = dt(n.find(class_='item__category').text.strip())
         name = n.find(class_='item__title').text.strip()
-        print(date,name)
         a.append([date,name])
 
     bd(a)
