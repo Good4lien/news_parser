@@ -8,7 +8,7 @@ def bd(a):
     cur = conn.cursor()
     i=0
     for n in a:
-        cur.execute("INSERT INTO news VALUES(?, ?, ?);", [i,n])
+        cur.execute("INSERT INTO news VALUES(?, ?, ?);", [i,n[0],n[1]])
         conn.commit()
         i+=1
 
