@@ -8,7 +8,7 @@
 ## SQL:
 ```SQL
 CREATE TABLE IF NOT EXISTS news(
-    id INT PRIMARY KEY autoincrement,
+    id INT PRIMARY KEY,
     time_ TEXT,
     name_ TEXT);
 ```
