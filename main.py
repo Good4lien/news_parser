@@ -6,7 +6,12 @@ import sqlite3
 def bd(a):
     conn = sqlite3.connect('news.sqlite')
     cur = conn.cursor()
-    i=0
+    #
+    cur.execute("SELECT id FROM news order by id desc limit 1;")
+    last_id = cur.fetchone()[0]
+    #
+    # i=0
+    i=last_id+1
     for n in a:
         cur.execute("INSERT INTO news VALUES(?, ?, ?);", [i,n[0],n[1]])
         conn.commit()
@@ -38,12 +43,12 @@ def main():
     soup = bs(resp.text, "lxml")
     #cat=soup.class('category')
 
-    news= soup.find_all(class_= "item__wrap")
+    news= soup.find_all(class_= "material-card")
 
     a=[]
     for n in news:
-        date = dt(n.find(class_='item__category').text.strip())
-        name = n.find(class_='item__title').text.strip()
+        date = dt(n.find(class_='meta-info-row-date').text.strip())
+        name = n.find(class_='spaced-items_wide').text.strip()
         a.append([date,name])
 
     bd(a)
